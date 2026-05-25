@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 検索で見つけてもらうためのタイトルと説明 -->
+    <title>タブのしおり ｜ ブラウザのタブを視覚的に区切る整理ツール</title>
+    <meta name="description" content="Chromeなどでタブを開きすぎて迷子になる人のための、視覚的な仕切りページです。好きな色を選んでブックマークするだけで、タブの中に「しおり」を挟めます。">
+    
+    <!-- 初期ファビコン（グレーのしおり） -->
+    <link id="favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2275%22 x=%2250%22 font-size=%2280%22 text-anchor=%22middle%22>🔖</text></svg>">
+    
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { font-size: 26px; margin-bottom: 10px; color: #fff; }
+        .tagline { font-size: 14px; color: #ffcc00; font-weight: bold; margin-bottom: 20px; }
+        p { font-size: 14px; color: #aaa; line-height: 1.6; }
+        
+        .steps {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            margin: 25px 0;
+            font-size: 13px;
+        }
+        .steps ol { margin: 5px 0 0 20px; padding: 0; }
+        .steps li { margin-bottom: 8px; }
+
+        .color-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: transform 0.1s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn:active { transform: scale(0.98); }
+        
+        /* 視覚的に一番目立つ色をチョイス */
+        .btn-red { background: #ff3333; color: white; }
+        .btn-yellow { background: #ffcc00; color: black; }
+        .btn-pink { background: #ff3399; color: white; }
+        .btn-green { background: #00cc66; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔖 タブのしおり</h1>
+    <div class="tagline">〜 大量に開いたタブを視覚的に区切るツール 〜</div>
+    <p>「タブを開きすぎてどれがどれだか分からない！」<br>そんな時は、このページをタブの間に挟んで整理しましょう。</p>
+    
+    <div class="steps">
+        <strong>💡 使い方：</strong>
+        <ol>
+            <li>下のボタンから、使いたい<strong>「しおりの色」</strong>を選びます。</li>
+            <li>色が変わったら、このページをブラウザの<strong>ブックマークバー</strong>に登録します。</li>
+            <li>次からは、登録したブックマークを<strong>ホイールクリック（中クリック）</strong>するだけで、一瞬で「タブのしおり」を呼び出せます！</li>
+        </ol>
+    </div>
+
+    <div class="color-selector">
+        <button class="btn btn-red" onclick="setBookmark('🛑', 'FF3333', 'white')">🛑 レッド</button>
+        <button class="btn btn-yellow" onclick="setBookmark('⚠️', 'FFCC00', 'black')">⚠️ イエロー</button>
+        <button class="btn btn-pink" onclick="setBookmark('🌸', 'FF3399', 'white')">🌸 ピンク</button>
+        <button class="btn btn-green" onclick="setBookmark('🍏', '00CC66', 'white')">🍏 グリーン</button>
+    </div>
+</div>
+
+<script>
+function setBookmark(emoji, bgColor, textColor) {
+    // 1. タブのタイトルを変更
+    document.title = `${emoji} ーーーーー しおり ーーーーー`;
+    
+    // 2. SVGで目立つファビコンを動的に生成して差し替え
+    const faviconUrl = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23${bgColor}%22/><text y=%2275%22 x=%2250%22 font-size=%2275%22 text-anchor=%22middle%22 fill=%22${textColor}%22 font-weight=%22bold%22>┃</text></svg>`;
+    
+    document.getElementById('favicon').setAttribute('href', faviconUrl);
+}
+</script>
+
+</body>
+</html>
